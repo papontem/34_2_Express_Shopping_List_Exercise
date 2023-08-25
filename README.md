@@ -71,5 +71,3 @@ Here are some extensions/modules/tools i use:
 - [Prettier](https://prettier.io/) : [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
 - [Supertest](https://github.com/ladjs/supertest)
-
-[Previous Repo]: https://github.com/papontem/33_4_Node_Files_Exercise/issues
