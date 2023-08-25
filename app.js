@@ -1,25 +1,28 @@
 const express = require("express");
+const app = express();
 const ExpressError = require("./expressError");
 
 // externall middleware request logger
 const morgan = require("morgan");
 
-const app = express();
+// import the express router for routes involving those used for items
+const itemsRoutes = require("./routes/items")
 
-// set app port
-const port = 3001;
+
 // Tell Express to parse all requests for json
 app.use(express.json());
-// callling the middleware, can also define the middleware function on the call
-// requierement for using morgan loggaer
+// requierement for using morgan logger, setting environment to development
 app.use(morgan("dev"));
 
 // ROUTES
 //get page icon
 app.get("/favicon.ico", (req, res) => res.sendStatus(204));
 
-// home landing
-app.get("/", (req, res, next) => {
+// set /items prefix for ease of route handling and editing 
+app.use("/items", itemsRoutes);
+
+// welcome msg
+app.get("/welcome", (req, res, next) => {
 	return res.send({
 		message:
 			"Welcome to the Shopping List Local Api. Please take a look at the readme.md for instruction.",
@@ -45,8 +48,4 @@ app.use(function (err, req, res, next) {
 	});
 });
 
-// app.listen loop
-app.listen(port, () => {
-	console.log(`Server running on port ${port}`);
-});
-// end app.listen
+module.exports = app;
