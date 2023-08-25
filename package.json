@@ -1,0 +1,26 @@
+{
+	"name": "34_2_express_shopping_list_exercise",
+	"version": "1.0.0",
+	"description": "exercise where we made a shopping list storage api",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/papontem/34_2_Express_Shopping_List_Exercise.git"
+	},
+	"author": "Phedias A.M.",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/papontem/34_2_Express_Shopping_List_Exercise/issues"
+	},
+	"homepage": "https://github.com/papontem/34_2_Express_Shopping_List_Exercise#readme",
+	"dependencies": {
+		"express": "^4.18.2",
+		"morgan": "^1.10.0"
+	},
+	"devDependencies": {
+		"supertest": "^6.3.3"
+	}
+}
