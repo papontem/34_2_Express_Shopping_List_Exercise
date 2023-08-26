@@ -2,7 +2,7 @@
 	"name": "34_2_express_shopping_list_exercise",
 	"version": "1.0.0",
 	"description": "exercise where we made a shopping list storage api",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

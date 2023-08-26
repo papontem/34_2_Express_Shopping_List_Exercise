@@ -22,7 +22,10 @@ app.get("/favicon.ico", (req, res) => res.sendStatus(204));
 app.use("/items", itemsRoutes);
 
 // welcome msg
-app.get("/welcome", (req, res, next) => {
+app.get("/", (req, res, next) => {
+    
+    console.log("Welcome to the Shopping List Local Api. Please take a look at the readme.md for instruction.");
+
 	return res.send({
 		message:
 			"Welcome to the Shopping List Local Api. Please take a look at the readme.md for instruction.",
