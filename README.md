@@ -7,8 +7,8 @@ Note: Since we are currently using an array for storage, this will be cleared ea
 ## Route Requests
 we'll focus on getting these routes up and running some simple jest supertests on them.
 
-GET /items
->response:
+GET `/items`
+>RESPONSE:
 
     [
         {“name”: “itemA”, “price”: 1.11},
@@ -16,44 +16,60 @@ GET /items
         ...
     ]
 
-POST /items
->request
+POST `/items`
+>REQUEST:
     
     {
         “name”:”itemC”,
         “price”: 3.00
     } 
->response
+>RESPONSE:
 
     {
         “added”: {
             “name”: “popsicle”, “price”: 1.45
             }
     }
-GET /items/:name
->response
+GET `/items/:name`
+>RESPONSE:
 
     {
         “name”: “itemName”,
         “price”: Float
     }
 
-PATCH /items/:name
->request
+PATCH `/items/:name`
+>REQUEST:
+PATCH to `/items/itemC` in attempt to change name
     
     {
-        “name”:”itemC”,
-        “price”: 3.50
+        “name”:”itemCyan”
     } 
->response
+or in attempt to also change price
+
+    {
+        “name”:”itemCyan”,
+        “price”: 3.33
+    } 
+
+
+>RESPONSE:
 
     {
         “updated”: {
-            “name”: “itemC”, “price”: 3.50
+            “name”: “itemCyan”, “price”: 3.00
             }
     }
-DELETE /items/:name
->response
+or
+
+    {
+        “updated”: {
+            “name”: “itemCyan”, “price”: 3.33
+            }
+    }
+
+DELETE `/items/:name`
+>RESPONSE:
 
     {
         message: “Deleted”

@@ -41,71 +41,75 @@ router.post("/", (req, res, next) => {
 });
 
 // GET an item by /items/:name
-router.get("/:name", function (req, res) {
-    // attempt to find first item with matching name, case sensitive
-	const foundItem = items.find((item) => item.name === req.params.name);
-	if (foundItem === undefined) {
-		throw new ExpressError("Item could not be found", 404);
-	}
+router.get("/:name", function (req, res, next) {
+	try {
+		// attempt to find first item with matching name, case sensitive
+		const foundItem = items.find((item) => item.name === req.params.name);
+		if (foundItem === undefined) {
+			throw new ExpressError("Item could not be found", 404);
+		}
 
-	res.json({ name: foundItem.name, price:foundItem.price });
+		return res.status(200).json({
+			name: foundItem.name,
+			price: foundItem.price,
+		});
+	} catch (error) {
+		return next(error);
+	}
 });
 
-
 // PATCH update or completely rewrite the item at /items/:name
-router.patch("/:name", function (req, res) {
+router.patch("/:name", (req, res, next) => {
+	try {
+		// validate request body
+		// name
+		// attempt to find first item with matching name, case sensitive
+		const foundItem = items.find((item) => item.name === req.params.name);
+		if (foundItem === undefined) {
+			throw new ExpressError("Item could not be found", 404);
+		}
+		foundItem.name = req.body.name;
 
+		// price
+		// was a price sent?
+		if (req.body.price) {
+			// attempt to turn into float
+			let price = parseFloat(req.body.price);
+			// if parseFloat returns NaN (not a number)
+			if (isNaN(price)) {
+				throw new ExpressError("price value must be numeric", 400);
+			}
+			// round to hundreths
+			price = Math.round(price * 100) / 100;
 
+			// check if price is different from the found items price
+			if (price != foundItem.price) {
+				// change it
+				foundItem.price = price;
+			}
+		}
 
-    // validate request body
-    // name
-    // attempt to find first item with matching name, case sensitive
-	const foundItem = items.find((item) => item.name === req.params.name);
-    if (foundItem === undefined) {
-		throw new ExpressError("Item could not be found", 404);
+		return res.status(200).json({ updated: foundItem });
+	} catch (error) {
+		return next(error);
 	}
-    foundItem.name = req.body.name
+});
 
-    // price
-    // was a price sent?
-    if(req.body.price){
-        // attempt to turn into float
-        let price = parseFloat(req.body.price);
-        // if parseFloat returns NaN (not a number)
-        if (isNaN(price)) {
-            throw new ExpressError("price value must be numeric", 400);
-        }
-        // round to hundreths
-        price = Math.round(price * 100) / 100;
-
-        // check if price is different from the found items price
-        if(price != foundItem.price){
-            // change it
-            foundItem.price = price
-        }
-    }
-    
-    res.json({ updated: foundItem })
-})
-
-// >request
-
-//     {
-//         “name”:”itemC”,
-//         “price”: 3.50
-//     }
-// >response
-
-//     {
-//         “updated”: {
-//             “name”: “itemC”, “price”: 3.50
-//             }
-//     }
 // DELETE /items/:name
-// >response
+router.delete("/:name", (req, res, next) => {
+	try {
+		// attempt to find first item with matching name, case sensitive
+		const foundItem = items.find((item) => item.name === req.params.name);
+		if (foundItem === undefined) {
+			throw new ExpressError("Item could not be found", 404);
+		}
 
-//     {
-//         message: “Deleted”
-//     }
+		items.splice(foundItem, 1);
+
+		return res.status(200).json({ message: "Deleted" });
+	} catch (error) {
+		return next(error);
+	}
+});
 
 module.exports = router;
